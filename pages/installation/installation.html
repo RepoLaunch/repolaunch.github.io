@@ -9,28 +9,12 @@
   <link rel="icon" type="image/png" href="../../assets/repolaunch_logo.png">
   <link rel="stylesheet" href="../../assets/site.css">
   <script src="../../assets/site.js" defer></script>
-  <noscript><style>@media (orientation: portrait), (max-width: 600px) { .sidebar { position: static; transform: none; visibility: visible; width: 100%; margin-top: var(--header); border-bottom: 1px solid var(--line); } .sidebar-note { display: none; } .site-body { padding-top: 0; } .menu-toggle { display: none; } }</style></noscript>
+  <noscript><style>.topbar, .sidebar, .site-footer { display: none; } .site-body { margin-left: 0; padding-top: 0; }</style></noscript>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
-  <header class="topbar">
-    <a class="repo-link" href="https://github.com/microsoft/RepoLaunch"><img src="../../assets/github_logo.svg" alt="" width="23" height="23">GitHub Repo <span class="external-arrow" aria-hidden="true">↗</span></a>
-    <a class="brand" href="../../index.html"><img src="../../assets/repolaunch_logo.png" alt="" width="38" height="38">RepoLaunch Agent</a>
-    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="site-navigation" aria-expanded="false">☰</button>
-  </header>
-  <aside class="sidebar" id="site-navigation">
-    <nav aria-label="Documentation">
-      <p class="nav-label">Documentation</p>
-      <ul class="nav-list">
-        <li><a href="../../index.html"><span class="nav-icon" aria-hidden="true">◎</span>Introduction</a></li>
-        <li><a href="../../pages/installation/installation.html" aria-current="page"><span class="nav-icon" aria-hidden="true">↓</span>Installation</a><ul><li><a href="../../pages/installation/windows.html">Windows Container Setup</a></li></ul></li>
-        <li><a href="../../pages/run/run.html"><span class="nav-icon" aria-hidden="true">▷</span>Run RepoLaunch</a><ul><li><a href="../../pages/run/api.html">Useful public APIs</a></li></ul></li>
-        <li><a href="../../pages/citations.html"><span class="nav-icon" aria-hidden="true">◷</span>Citations &amp; History</a></li>
-        <li><a href="../../pages/contact.html"><span class="nav-icon" aria-hidden="true">✉</span>Contact Us</a></li>
-      </ul>
-    </nav>
-    <div class="sidebar-note"><strong>A codebase is just the beginning.</strong>Build environments.<br>Make research reproducible.<br><a href="https://github.com/microsoft/RepoLaunch">microsoft/RepoLaunch ↗</a></div>
-  </aside>
+  <header class="topbar" data-shared="header"></header>
+  <aside class="sidebar" id="site-navigation" data-shared="sidebar"></aside>
   <div class="menu-backdrop" aria-hidden="true"></div>
   <div class="site-body">
     <main class="content" id="main-content" tabindex="-1">
@@ -105,16 +89,7 @@ pip install -e .
       </article>
       <nav class="page-navigation" aria-label="Previous and next pages"><a href="../../index.html"><small>Previous</small>← Introduction</a><a href="../../pages/installation/windows.html"><small>Next</small>→ Windows Container Setup</a></nav>
     </main>
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <h2 class="footer-heading">Relevant Links</h2>
-        <div class="footer-links">
-          <div><a href="https://swe-bench-live.github.io/">SWE-bench-Live Webpage ↗</a><a href="https://github.com/microsoft/SWE-bench-Live">SWE-bench-Live GitHub ↗</a></div>
-          <div><a href="https://huggingface.co/collections/SWE-bench-Live/swe-bench-live">SWE-bench-Live Huggingface ↗</a><a href="https://huggingface.co/collections/SWE-bench-Live/cross-platform-bench">Cross-platform Bench Huggingface ↗</a></div>
-        </div>
-        <div class="footer-bottom">RepoLaunch Agent · Open source tools for reproducible Software Engineering research.</div>
-      </div>
-    </footer>
+    <footer class="site-footer" data-shared="footer"></footer>
   </div>
   <span class="sr-only" role="status" id="copy-status" aria-live="polite"></span>
 </body>

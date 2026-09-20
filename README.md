@@ -34,3 +34,17 @@ Relevant Links:
 [SWE-bench-Live Huggingface](https://huggingface.co/collections/SWE-bench-Live/swe-bench-live)
 [Cross-platform Bench Huggingface](https://huggingface.co/collections/SWE-bench-Live/cross-platform-bench)
 ```
+
+## Shared layout and deployment
+
+The header, sidebar, and footer are defined once in `sharedLayout` at the top of
+`assets/site.js`. Edit those templates to update all seven pages. Each HTML page
+contains a `data-shared` placeholder for each component. The script resolves
+local links and images relative to its own location and marks the current page
+in the sidebar automatically.
+
+Page content remains directly editable in `index.html` and `pages/`. Publish
+those files together with `assets/` and `.nojekyll` to GitHub Pages. No build step,
+packages, or external libraries are required. JavaScript is needed for the
+shared bars; with JavaScript disabled, the page content and its previous/next
+links remain available.

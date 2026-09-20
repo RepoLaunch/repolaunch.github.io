@@ -1,3 +1,56 @@
+// Shared site chrome. Edit these templates once to update every page.
+// Resolve local assets and navigation from this script, including project-site subpaths.
+const siteRoot = new URL('../', document.currentScript.src);
+const sharedLayout = {
+  header: `
+<a class="repo-link" href="https://github.com/microsoft/RepoLaunch"><img data-site-src="assets/github_logo.svg" alt="" width="23" height="23">GitHub Repo <span class="external-arrow" aria-hidden="true">↗</span></a>
+    <a class="brand" data-site-href="index.html"><img data-site-src="assets/repolaunch_logo.png" alt="" width="38" height="38">RepoLaunch Agent</a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="site-navigation" aria-expanded="false">☰</button>
+  `,
+  sidebar: `
+<nav aria-label="Documentation">
+      <p class="nav-label">Documentation</p>
+      <ul class="nav-list">
+        <li><a data-site-href="index.html"><span class="nav-icon" aria-hidden="true">◎</span>Introduction</a></li>
+        <li><a data-site-href="pages/installation/installation.html"><span class="nav-icon" aria-hidden="true">↓</span>Installation</a><ul><li><a data-site-href="pages/installation/windows.html">Windows Container Setup</a></li></ul></li>
+        <li><a data-site-href="pages/run/run.html"><span class="nav-icon" aria-hidden="true">▷</span>Run RepoLaunch</a><ul><li><a data-site-href="pages/run/api.html">Useful public APIs</a></li></ul></li>
+        <li><a data-site-href="pages/citations.html"><span class="nav-icon" aria-hidden="true">◷</span>Citations &amp; History</a></li>
+        <li><a data-site-href="pages/contact.html"><span class="nav-icon" aria-hidden="true">✉</span>Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-note"><strong>A codebase is just the beginning.</strong>Build environments.<br>Make research reproducible.<br><a href="https://github.com/microsoft/RepoLaunch">microsoft/RepoLaunch ↗</a></div>
+  `,
+  footer: `
+<div class="footer-inner">
+        <h2 class="footer-heading">Relevant Links</h2>
+        <div class="footer-links">
+          <div><a href="https://swe-bench-live.github.io/">SWE-bench-Live Webpage ↗</a><a href="https://github.com/microsoft/SWE-bench-Live">SWE-bench-Live GitHub ↗</a></div>
+          <div><a href="https://huggingface.co/collections/SWE-bench-Live/swe-bench-live">SWE-bench-Live Huggingface ↗</a><a href="https://huggingface.co/collections/SWE-bench-Live/cross-platform-bench">Cross-platform Bench Huggingface ↗</a></div>
+        </div>
+        <div class="footer-bottom">RepoLaunch Agent · Open source tools for reproducible Software Engineering research.</div>
+      </div>
+  `
+};
+
+for (const [name, markup] of Object.entries(sharedLayout)) {
+  const container = document.querySelector(`[data-shared="${name}"]`);
+  if (container) container.innerHTML = markup;
+}
+
+document.querySelectorAll('[data-site-href], [data-site-src]').forEach(element => {
+  for (const attribute of ['href', 'src']) {
+    const path = element.getAttribute(`data-site-${attribute}`);
+    if (path !== null) element.setAttribute(attribute, new URL(path, siteRoot).href);
+  }
+});
+
+const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
+document.querySelectorAll('.sidebar .nav-list a').forEach(link => {
+  if (new URL(link.href).pathname.replace(/\/index\.html$/, '/') === currentPath) {
+    link.setAttribute('aria-current', 'page');
+  }
+});
+
 const menuButton = document.querySelector('.menu-toggle');
 const sidebar = document.querySelector('.sidebar');
 const backdrop = document.querySelector('.menu-backdrop');
