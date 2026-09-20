@@ -24,7 +24,7 @@
       <article class="article" aria-label="Introduction">
         <section class="hero" aria-labelledby="intro-title">
   <p class="eyebrow"><span class="status-dot"></span> Build. Test. Launch.</p>
-  <h1 id="intro-title">RepoLaunch Agent:<br>Turning Any Codebase into <em>Testable Sandbox Environment</em></h1>
+  <h1 id="intro-title">RepoLaunch Agent:<br><em>Turning Any Codebase into Testable Sandbox Environment</em></h1>
   <p class="subtitle">Meet RepoLaunch, an agent that automatically builds and manages code repositories across programming languages and operating systems. From source code to a ready-to-test sandbox.</p>
   <div class="actions">
     <a class="button" href="pages/installation/installation.html">Get started <span aria-hidden="true">→</span></a>
@@ -34,7 +34,7 @@
 </section>
 
 <section aria-labelledby="capabilities">
-  <div class="section-heading"><h2 id="capabilities">One agent. The whole setup.</h2><span>From repository to reproducibility</span></div>
+  <div class="section-heading"><h2 id="capabilities">What RepoLaunch Can Do</h2><span>From repository to reproducibility</span></div>
   <p class="intro-copy">RepoLaunch is the first agentic SWE tool for repository build and test management across programming languages and operating systems. Give it a repository, and it handles the groundwork.</p>
   <div class="feature-grid">
     <div class="feature"><span class="feature-number">01 / BUILD</span><h3>Ready-to-run environments</h3><p>Install dependencies and build the repository in a Docker image, with layer information for Dockerfile reconstruction.</p></div>
@@ -48,8 +48,8 @@
 </section>
 
 <section aria-labelledby="applications">
-  <div class="section-heading"><h2 id="applications">Powering SWE-bench-Live</h2><a href="https://swe-bench-live.github.io/">Explore the benchmark ↗</a></div>
-  <p class="intro-copy">RepoLaunch builds and tests the execution environments behind the <a href="https://github.com/microsoft/SWE-bench-Live">SWE-bench-Live dataset family</a>, used by organizations to benchmark language models and coding agents, and for agentic training through rejection-based SFT and reinforcement learning.</p>
+  <div class="section-heading"><h2 id="applications">Applications</h2><a href="https://swe-bench-live.github.io/">Explore the benchmark ↗</a></div>
+  <p class="intro-copy">RepoLaunch powers the build and test of the execution environments behind the whole <a href="https://github.com/microsoft/SWE-bench-Live">SWE-bench-Live</a> Software Engineering dataset family. RepoLaunch has been used by many organizations to benchmark code language models and coding agents, and for agentic training of Language Models through rejection-based SFT and reinforcement learning. The SWE-bench-Live family RepoLaunch creates include:</p>
   <div class="dataset-grid">
     <a class="dataset" href="https://huggingface.co/datasets/SWE-bench-Live/SWE-bench-Live"><span><strong>SWE-bench-Live</strong><small>Python · Linux</small></span><span aria-hidden="true">↗</span></a>
     <a class="dataset" href="https://huggingface.co/datasets/SWE-bench-Live/MultiLang"><span><strong>MultiLang</strong><small>Multiple languages · Linux</small></span><span aria-hidden="true">↗</span></a>
@@ -59,7 +59,7 @@
 </section>
 
 <section aria-labelledby="news">
-  <div class="section-heading"><h2 id="news">Latest from RepoLaunch</h2><span>Project news & updates</span></div>
+  <div class="section-heading"><h2 id="news">Latest News from RepoLaunch</h2><span>Project news & updates</span></div>
   <ul class="news-list">
     <li><time datetime="2026-08-20">20 AUG 2026</time><div><strong>A little memory goes a long way.</strong><p>A memory-aware solution reuses successful RepoLaunch results across commits of the same repository. Across 856 GitHub issues from 93 repositories, experiments show ≥98% success, 82% savings on language model API cost, and 78% savings on Docker image storage. Particularly useful for creating multiple task instances from a repository’s issues. <a href="https://github.com/microsoft/RepoLaunch/blob/main/docs/Development.md#reuse-repolaunch-results-for-different-commits-of-the-same-repo">Read the development guide ↗</a></p></div></li>
     <li><time datetime="2026-03-28">28 MAR 2026</time><div><strong>More models. More possibilities.</strong><p>LiteLLM support brings compatibility with mainstream LLM providers and local deployments for agentic training (RFT and RL) based on launch results. RepoLaunch retains the plain-text Thought–Action format for compatibility with smaller open-source models that struggle with tool-call fields.</p></div></li>
