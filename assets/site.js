@@ -18,7 +18,7 @@ const sharedLayout = {
         <li><a data-site-href="pages/contact.html"><span class="nav-icon" aria-hidden="true">✉</span>Contact Us</a></li>
       </ul>
     </nav>
-    <div class="sidebar-note"><strong>A codebase is just the beginning.</strong>Build environments.<br>Make research reproducible.<br><a href="https://github.com/microsoft/RepoLaunch">microsoft/RepoLaunch ↗</a></div>
+    <div class="sidebar-note"><strong>A codebase is actively evolving.</strong>Build environments.<br>Make build&test reproducible.<br><a href="https://github.com/microsoft/RepoLaunch">microsoft/RepoLaunch ↗</a></div>
   `,
   footer: `
 <div class="footer-inner">
