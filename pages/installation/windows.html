@@ -1,91 +1,115 @@
-# Development on Windows
-
-This doc is about running RepoLaunch on Windows system to build and test repo in Windows environment.
-
-## Machine Requirements
-
-OS version: Windows Pro 10 / 11 or Windows Enterprise 10 / 11 or Windows Server 2025. Simple Windows Personal / Family / Home version does not support docker at all!
-
-CPU cores: >=12
-
-RAM: >=32GB
-
-Disk: Local Disk and >=800GB, SSD preferred
-
-Internet speed: Download >= 300Mbps; Upload >= 75 Mbps
-
-## To run on Windows, you need to set up ...
-
-(1) Download and run docker desktop installer from the Docker official website.
-
-(2) If you want to build repo on windows container and windows image, remeber to click `install windows container` in the installer navigation as it is optional. After installation, open Docker Desktop, right click the docker icon in the task bar, click `switch to Windows containers`. 
-
-You will be prompted by docker desktop to turn on virtualization (and also container if you choose windows container) features like this:
-
-```powershell
-# Search Powershell in the Search Bar and right click and choose 'run as Administrator'
-Enable-WindowsOptionalFeature -Online -FeatureName $("Microsoft-Hyper-V", "Containers") -All
-```
-
-Of course you can also run Linux (or Android) images on Windows. Just right click the docker icon in the task bar, click `switch to Linux containers`. And now docker on Windows runs Linux-based containers.
-
-(3) Enable long path in git. Open windows powershell as administrator,
-
-```powershell
-git config --global core.longpaths true
-```
-
-(4) Enable long path in Windows system. 
-
-Go to Registry Editor, in the top of registry editor enter path HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem, find the item LongPathsEnabled, double click it and change the value to 1.
-
-(5) Resolve Windows encoding issues
-
-```powershell
-# in your powershell
-$env:PYTHONUTF8="1"
-$env:PYTHONIOENCODING="utf-8"
-```
-
-Now run original installation steps in [Installation](pages/installation/installation.html).
-
-
-## Windows Notes
-(1) The way to export environment variables in Windows is
-
-```powershell
-# powershell
-$env:OPENAI_API_KEY="your_key"
-```
-
-```cmd
-:: command line prompt
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prepare a Windows environment to build and test your repositories.">
+  <meta name="theme-color" content="#fbfaf6">
+  <title>Windows Container Setup · RepoLaunch Agent</title>
+  <link rel="icon" type="image/png" href="../../assets/repolaunch_logo.png">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+  <noscript><style>@media (orientation: portrait), (max-width: 600px) { .sidebar { position: static; transform: none; visibility: visible; width: 100%; margin-top: var(--header); border-bottom: 1px solid var(--line); } .sidebar-note { display: none; } .site-body { padding-top: 0; } .menu-toggle { display: none; } }</style></noscript>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="topbar">
+    <a class="repo-link" href="https://github.com/microsoft/RepoLaunch"><img src="../../assets/github_logo.svg" alt="" width="23" height="23">GitHub Repo <span class="external-arrow" aria-hidden="true">↗</span></a>
+    <a class="brand" href="../../index.html"><img src="../../assets/repolaunch_logo.png" alt="" width="38" height="38">RepoLaunch Agent</a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="site-navigation" aria-expanded="false">☰</button>
+  </header>
+  <aside class="sidebar" id="site-navigation">
+    <nav aria-label="Documentation">
+      <p class="nav-label">Documentation</p>
+      <ul class="nav-list">
+        <li><a href="../../index.html"><span class="nav-icon" aria-hidden="true">◎</span>Introduction</a></li>
+        <li><a href="../../pages/installation/installation.html"><span class="nav-icon" aria-hidden="true">↓</span>Installation</a><ul><li><a href="../../pages/installation/windows.html" aria-current="page">Windows Container Setup</a></li></ul></li>
+        <li><a href="../../pages/run/run.html"><span class="nav-icon" aria-hidden="true">▷</span>Run RepoLaunch</a><ul><li><a href="../../pages/run/api.html">Useful public APIs</a></li></ul></li>
+        <li><a href="../../pages/citations.html"><span class="nav-icon" aria-hidden="true">◷</span>Citations &amp; History</a></li>
+        <li><a href="../../pages/contact.html"><span class="nav-icon" aria-hidden="true">✉</span>Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-note"><strong>A codebase is just the beginning.</strong>Build environments.<br>Make research reproducible.<br><a href="https://github.com/microsoft/RepoLaunch">microsoft/RepoLaunch ↗</a></div>
+  </aside>
+  <div class="menu-backdrop" aria-hidden="true"></div>
+  <div class="site-body">
+    <main class="content" id="main-content" tabindex="-1">
+      <div class="breadcrumb"><a href="../../index.html">Docs</a><span aria-hidden="true">/</span><span>Windows Container Setup</span></div>
+      <header class="page-header"><p class="eyebrow">Getting started</p><h1>Windows Container Setup</h1><p class="subtitle">Prepare a Windows environment to build and test your repositories.</p></header>
+      <details class="toc"><summary>On this page</summary><div>
+<ul>
+<li><a href="#machine-requirements">Machine Requirements</a></li>
+<li><a href="#to-run-on-windows-you-need-to-set-up">To run on Windows, you need to set up ...</a></li>
+<li><a href="#windows-notes">Windows Notes</a></li>
+</ul>
+</div>
+</details>
+      <article class="article" aria-label="Windows Container Setup">
+        <h2 id="development-on-windows">Development on Windows</h2>
+<p>This doc is about running RepoLaunch on Windows system to build and test repo in Windows environment.</p>
+<h2 id="machine-requirements">Machine Requirements</h2>
+<p>OS version: Windows Pro 10 / 11 or Windows Enterprise 10 / 11 or Windows Server 2025. Simple Windows Personal / Family / Home version does not support docker at all!</p>
+<p>CPU cores: &gt;=12</p>
+<p>RAM: &gt;=32GB</p>
+<p>Disk: Local Disk and &gt;=800GB, SSD preferred</p>
+<p>Internet speed: Download &gt;= 300Mbps; Upload &gt;= 75 Mbps</p>
+<h2 id="to-run-on-windows-you-need-to-set-up">To run on Windows, you need to set up ...</h2>
+<p>(1) Download and run docker desktop installer from the Docker official website.</p>
+<p>(2) If you want to build repo on windows container and windows image, remeber to click <code>install windows container</code> in the installer navigation as it is optional. After installation, open Docker Desktop, right click the docker icon in the task bar, click <code>switch to Windows containers</code>. </p>
+<p>You will be prompted by docker desktop to turn on virtualization (and also container if you choose windows container) features like this:</p>
+<div class="code-block"><div class="code-toolbar"><span>powershell</span></div><pre tabindex="0"><code class="language-powershell"># Search Powershell in the Search Bar and right click and choose 'run as Administrator'
+Enable-WindowsOptionalFeature -Online -FeatureName $(&quot;Microsoft-Hyper-V&quot;, &quot;Containers&quot;) -All
+</code></pre></div>
+<p>Of course you can also run Linux (or Android) images on Windows. Just right click the docker icon in the task bar, click <code>switch to Linux containers</code>. And now docker on Windows runs Linux-based containers.</p>
+<p>(3) Enable long path in git. Open windows powershell as administrator,</p>
+<div class="code-block"><div class="code-toolbar"><span>powershell</span></div><pre tabindex="0"><code class="language-powershell">git config --global core.longpaths true
+</code></pre></div>
+<p>(4) Enable long path in Windows system. </p>
+<p>Go to Registry Editor, in the top of registry editor enter path HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem, find the item LongPathsEnabled, double click it and change the value to 1.</p>
+<p>(5) Resolve Windows encoding issues</p>
+<div class="code-block"><div class="code-toolbar"><span>powershell</span></div><pre tabindex="0"><code class="language-powershell"># in your powershell
+$env:PYTHONUTF8=&quot;1&quot;
+$env:PYTHONIOENCODING=&quot;utf-8&quot;
+</code></pre></div>
+<p>Now run original installation steps in <a href="installation.html">Installation</a>.</p>
+<h2 id="windows-notes">Windows Notes</h2>
+<p>(1) The way to export environment variables in Windows is</p>
+<div class="code-block"><div class="code-toolbar"><span>powershell</span></div><pre tabindex="0"><code class="language-powershell"># powershell
+$env:OPENAI_API_KEY=&quot;your_key&quot;
+</code></pre></div>
+<div class="code-block"><div class="code-toolbar"><span>cmd</span></div><pre tabindex="0"><code class="language-cmd">:: command line prompt
 set OPENAI_API_KEY=your_key
-```
-
-(2) Runtime Warning
-
-For Windows docker, if you save many images / containers on the same machine, the docker will become overloaded -- become very slow and can never start again next time.
-
-So to run Windows instances plase run 20 instances as a batch, push to dockerhub or compress to elsewhere for backup, delete all containers and most images locally, and run next batch. Or, distribute jobs on many Windows machines with each machine processing 20 instances at a time.
-
-(3) If applying patch has decoding problems, please
-
-```powershell
-# powershell
-$env:PYTHONUTF8="1"
-$env:PYTHONIOENCODING="utf-8"
-```
-
-(4) If you see the following error when repolaunch commits container to image:
-
-```
-500 Server Error for
-http+docker://localnpipe/v1.52/commit?container=abfe0abab2fbba111ef56d0cd6af0ff4ec327de999f34d6528b1c044125613c9&repo=starryzhang%2Fsweb.eval.win&tag=szimek__signature_pa
-d-835_windows&pause=True: Internal Server Error ("re-exec error: exit status 1: output: hcsshim::ImportLayer failed in Win32: The system cannot find the path specified.
-(0x3)")
-```
-
-This has long been a known issue of windows container: https://github.com/microsoft/hcsshim/issues/835. We wish the Windows system team could fix it in the future. Amusingly, the issue has been open for 5 years with no solution. Thus, we do not count this bug into our success rate.
-
-From our initial diagnosis we believe the error is associated with the I/O quality of the disk. So always use SSD disk with the best configuration as you can.
+</code></pre></div>
+<p>(2) Runtime Warning</p>
+<p>For Windows docker, if you save many images / containers on the same machine, the docker will become overloaded -- become very slow and can never start again next time.</p>
+<p>So to run Windows instances plase run 20 instances as a batch, push to dockerhub or compress to elsewhere for backup, delete all containers and most images locally, and run next batch. Or, distribute jobs on many Windows machines with each machine processing 20 instances at a time.</p>
+<p>(3) If applying patch has decoding problems, please</p>
+<div class="code-block"><div class="code-toolbar"><span>powershell</span></div><pre tabindex="0"><code class="language-powershell"># powershell
+$env:PYTHONUTF8=&quot;1&quot;
+$env:PYTHONIOENCODING=&quot;utf-8&quot;
+</code></pre></div>
+<p>(4) If you see the following error when repolaunch commits container to image:</p>
+<div class="code-block"><div class="code-toolbar"><span>text</span></div><pre tabindex="0"><code>500 Server Error for
+http+docker://localnpipe/v1.52/commit?container=abfe0abab2fbba111ef56d0cd6af0ff4ec327de999f34d6528b1c044125613c9&amp;repo=starryzhang%2Fsweb.eval.win&amp;tag=szimek__signature_pa
+d-835_windows&amp;pause=True: Internal Server Error (&quot;re-exec error: exit status 1: output: hcsshim::ImportLayer failed in Win32: The system cannot find the path specified.
+(0x3)&quot;)
+</code></pre></div>
+<p>This has long been a known issue of windows container: https://github.com/microsoft/hcsshim/issues/835. We wish the Windows system team could fix it in the future. Amusingly, the issue has been open for 5 years with no solution. Thus, we do not count this bug into our success rate.</p>
+<p>From our initial diagnosis we believe the error is associated with the I/O quality of the disk. So always use SSD disk with the best configuration as you can.</p>
+      </article>
+      <nav class="page-navigation" aria-label="Previous and next pages"><a href="../../pages/installation/installation.html"><small>Previous</small>← Installation</a><a href="../../pages/run/run.html"><small>Next</small>→ Run RepoLaunch</a></nav>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <h2 class="footer-heading">Relevant Links</h2>
+        <div class="footer-links">
+          <div><a href="https://swe-bench-live.github.io/">SWE-bench-Live Webpage ↗</a><a href="https://github.com/microsoft/SWE-bench-Live">SWE-bench-Live GitHub ↗</a></div>
+          <div><a href="https://huggingface.co/collections/SWE-bench-Live/swe-bench-live">SWE-bench-Live Huggingface ↗</a><a href="https://huggingface.co/collections/SWE-bench-Live/cross-platform-bench">Cross-platform Bench Huggingface ↗</a></div>
+        </div>
+        <div class="footer-bottom">RepoLaunch Agent · Open source tools for reproducible Software Engineering research.</div>
+      </div>
+    </footer>
+  </div>
+  <span class="sr-only" role="status" id="copy-status" aria-live="polite"></span>
+</body>
+</html>

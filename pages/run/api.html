@@ -1,20 +1,61 @@
-
-## Helper scripts
-
-### To use launch result
-
-```python
-from launch.api import LaunchedInstance
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build, test, apply patches, and manage images with RepoLaunch’s helper APIs.">
+  <meta name="theme-color" content="#fbfaf6">
+  <title>Useful public APIs · RepoLaunch Agent</title>
+  <link rel="icon" type="image/png" href="../../assets/repolaunch_logo.png">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+  <noscript><style>@media (orientation: portrait), (max-width: 600px) { .sidebar { position: static; transform: none; visibility: visible; width: 100%; margin-top: var(--header); border-bottom: 1px solid var(--line); } .sidebar-note { display: none; } .site-body { padding-top: 0; } .menu-toggle { display: none; } }</style></noscript>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="topbar">
+    <a class="repo-link" href="https://github.com/microsoft/RepoLaunch"><img src="../../assets/github_logo.svg" alt="" width="23" height="23">GitHub Repo <span class="external-arrow" aria-hidden="true">↗</span></a>
+    <a class="brand" href="../../index.html"><img src="../../assets/repolaunch_logo.png" alt="" width="38" height="38">RepoLaunch Agent</a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="site-navigation" aria-expanded="false">☰</button>
+  </header>
+  <aside class="sidebar" id="site-navigation">
+    <nav aria-label="Documentation">
+      <p class="nav-label">Documentation</p>
+      <ul class="nav-list">
+        <li><a href="../../index.html"><span class="nav-icon" aria-hidden="true">◎</span>Introduction</a></li>
+        <li><a href="../../pages/installation/installation.html"><span class="nav-icon" aria-hidden="true">↓</span>Installation</a><ul><li><a href="../../pages/installation/windows.html">Windows Container Setup</a></li></ul></li>
+        <li><a href="../../pages/run/run.html"><span class="nav-icon" aria-hidden="true">▷</span>Run RepoLaunch</a><ul><li><a href="../../pages/run/api.html" aria-current="page">Useful public APIs</a></li></ul></li>
+        <li><a href="../../pages/citations.html"><span class="nav-icon" aria-hidden="true">◷</span>Citations &amp; History</a></li>
+        <li><a href="../../pages/contact.html"><span class="nav-icon" aria-hidden="true">✉</span>Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-note"><strong>A codebase is just the beginning.</strong>Build environments.<br>Make research reproducible.<br><a href="https://github.com/microsoft/RepoLaunch">microsoft/RepoLaunch ↗</a></div>
+  </aside>
+  <div class="menu-backdrop" aria-hidden="true"></div>
+  <div class="site-body">
+    <main class="content" id="main-content" tabindex="-1">
+      <div class="breadcrumb"><a href="../../index.html">Docs</a><span aria-hidden="true">/</span><span>Useful public APIs</span></div>
+      <header class="page-header"><p class="eyebrow">Guides</p><h1>Useful public APIs</h1><p class="subtitle">Build, test, apply patches, and manage images with RepoLaunch’s helper APIs.</p></header>
+      <details class="toc"><summary>On this page</summary><div>
+<ul>
+<li><a href="#helper-scripts">Helper scripts</a></li>
+</ul>
+</div>
+</details>
+      <article class="article" aria-label="Useful public APIs">
+        <h2 id="helper-scripts">Helper scripts</h2>
+<h3 id="to-use-launch-result">To use launch result</h3>
+<div class="code-block"><div class="code-toolbar"><span>python</span></div><pre tabindex="0"><code class="language-python">from launch.api import LaunchedInstance
 import json
 from typing import Literal
 
 # load an instance from organize.jsonl
-with open("..../organize.jsonl") as f:
+with open(&quot;..../organize.jsonl&quot;) as f:
     instance_list = [json.loads(i) for i in f]
 instance_dict = instance_list[0]
 
 # Object Oriented API
-instance: LaunchedInstance = LaunchedInstance(instance_dict, "linux") # or "windows" for windows image
+instance: LaunchedInstance = LaunchedInstance(instance_dict, &quot;linux&quot;) # or &quot;windows&quot; for windows image
 
 ###### To use the testlog parser to get current test statuses ######
 success, build_log = instance.build(verbose = False)
@@ -25,17 +66,17 @@ status: dict[str, Literal['pass', 'fail', 'skip']] = instance.parse_test_log(log
 status: dict[str, Literal['pass', 'fail', 'skip']] = instance.build_test_parse(verbose = True)
 
 print(status)
-# {"testcase1": "pass", "testcase2": "fail", "testcase3": "skip"}
+# {&quot;testcase1&quot;: &quot;pass&quot;, &quot;testcase2&quot;: &quot;fail&quot;, &quot;testcase3&quot;: &quot;skip&quot;}
 
 del instance # to release docker container
 
 ###### To evaluate the effect of a new diff patch ######
 
-instance: LaunchedInstance = LaunchedInstance(instance_dict, "linux")
+instance: LaunchedInstance = LaunchedInstance(instance_dict, &quot;linux&quot;)
 
 # load your diff_patch
 # for example, for swe bench format instance:
-diff_patch = instance_dict["test_patch"]
+diff_patch = instance_dict[&quot;test_patch&quot;]
 
 instance.apply_patch(diff_patch, verbose=True)
 after_patch_status: dict[str, Literal['pass', 'fail', 'skip']] = instance.build_test_parse(verbose = True)
@@ -44,44 +85,49 @@ after_patch_status: dict[str, Literal['pass', 'fail', 'skip']] = instance.build_
 
 # if you need to save the changes
 success, log = instance.git_commit(your_message)
-instance.commit_to_image(image_name="experiment", tag="1")
+instance.commit_to_image(image_name=&quot;experiment&quot;, tag=&quot;1&quot;)
 
 # for custom bash command into the docker container:
 res = instance.container.send_command(your_command)
-print(res.metadata.exit_code, res.output, sep = "\n")
+print(res.metadata.exit_code, res.output, sep = &quot;\n&quot;)
 
 del instance # to release docker container
-```
-
-### If launch was interrupted, you can collect summary manually
-
-```bash
-python -m launch.scripts.collect\
+</code></pre></div>
+<h3 id="if-launch-was-interrupted-you-can-collect-summary-manually">If launch was interrupted, you can collect summary manually</h3>
+<div class="code-block"><div class="code-toolbar"><span>bash</span></div><pre tabindex="0"><code class="language-bash">python -m launch.scripts.collect\
     --workspace  data/test1  --step setup  # or organize
-```
-
-### To upload the result to dockerhub
-
-```bash
-docker login
+</code></pre></div>
+<h3 id="to-upload-the-result-to-dockerhub">To upload the result to dockerhub</h3>
+<div class="code-block"><div class="code-toolbar"><span>bash</span></div><pre tabindex="0"><code class="language-bash">docker login
 
 python -m launch.scripts.upload_docker\
     --dataset  data/test1/organize.jsonl\
     --clear_after_push 0 # 0 for false and 1 for true
-```
-
-### Re-assemble Dockerfile
-
-Reconstruct Dockerfile of a commited image from instance["docker_image_layers"].
-
-The Dockerfile behavior strictly aligns with that of RepoLaunch-created images. It produces two layers (the setup layer and the organize layer) with error commands silenty bypassed instead of interuptting the build.
-
-```bash
-python -m launch.scripts.gen_dockerfile  \
+</code></pre></div>
+<h3 id="re-assemble-dockerfile">Re-assemble Dockerfile</h3>
+<p>Reconstruct Dockerfile of a commited image from instance["docker_image_layers"].</p>
+<p>The Dockerfile behavior strictly aligns with that of RepoLaunch-created images. It produces two layers (the setup layer and the organize layer) with error commands silenty bypassed instead of interuptting the build.</p>
+<div class="code-block"><div class="code-toolbar"><span>bash</span></div><pre tabindex="0"><code class="language-bash">python -m launch.scripts.gen_dockerfile  \
     --dataset data/..../organize.jsonl  \
     --platform linux \
     # or windows 
     --output_dir data/dockerfiles
-```
-
-Android images are also linux-arch, so use --platform=linux
+</code></pre></div>
+<p>Android images are also linux-arch, so use --platform=linux</p>
+      </article>
+      <nav class="page-navigation" aria-label="Previous and next pages"><a href="../../pages/run/run.html"><small>Previous</small>← Run RepoLaunch</a><a href="../../pages/citations.html"><small>Next</small>→ Citations &amp; History</a></nav>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <h2 class="footer-heading">Relevant Links</h2>
+        <div class="footer-links">
+          <div><a href="https://swe-bench-live.github.io/">SWE-bench-Live Webpage ↗</a><a href="https://github.com/microsoft/SWE-bench-Live">SWE-bench-Live GitHub ↗</a></div>
+          <div><a href="https://huggingface.co/collections/SWE-bench-Live/swe-bench-live">SWE-bench-Live Huggingface ↗</a><a href="https://huggingface.co/collections/SWE-bench-Live/cross-platform-bench">Cross-platform Bench Huggingface ↗</a></div>
+        </div>
+        <div class="footer-bottom">RepoLaunch Agent · Open source tools for reproducible Software Engineering research.</div>
+      </div>
+    </footer>
+  </div>
+  <span class="sr-only" role="status" id="copy-status" aria-live="polite"></span>
+</body>
+</html>

@@ -1,138 +1,338 @@
-
-## Launch your Repository
-
-The basic workflow of RepoLaunch agent is as follows:
-
-![RepoLaunch Workflow](assets/workflow.png)
-
-Trajectory & result demos of RepoLaunch agent: [RepoLaunch-Trajectory-Archive](https://github.com/SWE-bench-Live/RepoLaunch-trajectory-archive).
-
-
-## Run RepoLaunch
-
-We provide an example input file `data/examples/dataset.jsonl` and a run config `data/examples/config.json` in [examples](../data/examples) to help you quickly go through the launch process. Expected output files are `data/examples/result.jsonl` and `data/examples/playground/`.
-
-Before getting started, please set your `TAVILY_API_KEY` environment variable. We use [tavily](https://www.tavily.com/) for LLM search engine support.
-
-```shell
-export TAVILY_API_KEY=...
-```
-
-We use LiteLLM for max compatibility of LLM API, AND to enable custom API deployment for agentic training. Export your LLM API KEY, say OPENAI_API_KEY, ANTHROPIC_API_KEY... 
-
-```bash
-export OPENAI_API_KEY=...
-```
-
-We have made `launch/launch/utilities/llm.py` compatible to both traditional completion API and OpenAI responses API. 
-If your llm provider requires user identity login for API usage or requires some weird settings like Gemini thinking signaturue, go to modify `launch/launch/utilities/llm.py`.
-
-Start repo launch process:
-
-```shell
-launch data/examples/config.json
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Launch a repository, configure your workflow, and work with the results.">
+  <meta name="theme-color" content="#fbfaf6">
+  <title>Run RepoLaunch · RepoLaunch Agent</title>
+  <link rel="icon" type="image/png" href="../../assets/repolaunch_logo.png">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+  <noscript><style>@media (orientation: portrait), (max-width: 600px) { .sidebar { position: static; transform: none; visibility: visible; width: 100%; margin-top: var(--header); border-bottom: 1px solid var(--line); } .sidebar-note { display: none; } .site-body { padding-top: 0; } .menu-toggle { display: none; } }</style></noscript>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="topbar">
+    <a class="repo-link" href="https://github.com/microsoft/RepoLaunch"><img src="../../assets/github_logo.svg" alt="" width="23" height="23">GitHub Repo <span class="external-arrow" aria-hidden="true">↗</span></a>
+    <a class="brand" href="../../index.html"><img src="../../assets/repolaunch_logo.png" alt="" width="38" height="38">RepoLaunch Agent</a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="site-navigation" aria-expanded="false">☰</button>
+  </header>
+  <aside class="sidebar" id="site-navigation">
+    <nav aria-label="Documentation">
+      <p class="nav-label">Documentation</p>
+      <ul class="nav-list">
+        <li><a href="../../index.html"><span class="nav-icon" aria-hidden="true">◎</span>Introduction</a></li>
+        <li><a href="../../pages/installation/installation.html"><span class="nav-icon" aria-hidden="true">↓</span>Installation</a><ul><li><a href="../../pages/installation/windows.html">Windows Container Setup</a></li></ul></li>
+        <li><a href="../../pages/run/run.html" aria-current="page"><span class="nav-icon" aria-hidden="true">▷</span>Run RepoLaunch</a><ul><li><a href="../../pages/run/api.html">Useful public APIs</a></li></ul></li>
+        <li><a href="../../pages/citations.html"><span class="nav-icon" aria-hidden="true">◷</span>Citations &amp; History</a></li>
+        <li><a href="../../pages/contact.html"><span class="nav-icon" aria-hidden="true">✉</span>Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-note"><strong>A codebase is just the beginning.</strong>Build environments.<br>Make research reproducible.<br><a href="https://github.com/microsoft/RepoLaunch">microsoft/RepoLaunch ↗</a></div>
+  </aside>
+  <div class="menu-backdrop" aria-hidden="true"></div>
+  <div class="site-body">
+    <main class="content" id="main-content" tabindex="-1">
+      <div class="breadcrumb"><a href="../../index.html">Docs</a><span aria-hidden="true">/</span><span>Run RepoLaunch</span></div>
+      <header class="page-header"><p class="eyebrow">Guides</p><h1>Run RepoLaunch</h1><p class="subtitle">Launch a repository, configure your workflow, and work with the results.</p></header>
+      <details class="toc"><summary>On this page</summary><div>
+<ul>
+<li><a href="#launch-your-repository">Launch your Repository</a></li>
+<li><a href="#run-repolaunch">Run RepoLaunch</a></li>
+<li><a href="#input">Input</a></li>
+<li><a href="#run-config">Run Config</a></li>
+<li><a href="#output">Output</a></li>
+</ul>
+</div>
+</details>
+      <article class="article" aria-label="Run RepoLaunch">
+        <h2 id="launch-your-repository">Launch your Repository</h2>
+<p>The basic workflow of RepoLaunch agent is as follows:</p>
+<p><img alt="RepoLaunch Workflow" src="../../assets/workflow.png" /></p>
+<p>Trajectory &amp; result demos of RepoLaunch agent: <a href="https://github.com/SWE-bench-Live/RepoLaunch-trajectory-archive">RepoLaunch-Trajectory-Archive</a>.</p>
+<h2 id="run-repolaunch">Run RepoLaunch</h2>
+<p>We provide an example input file <code>data/examples/dataset.jsonl</code> and a run config <code>data/examples/config.json</code> in <a href="https://github.com/microsoft/RepoLaunch/tree/main/data/examples">examples</a> to help you quickly go through the launch process. Expected output files are <code>data/examples/result.jsonl</code> and <code>data/examples/playground/</code>.</p>
+<p>Before getting started, please set your <code>TAVILY_API_KEY</code> environment variable. We use <a href="https://www.tavily.com/">tavily</a> for LLM search engine support.</p>
+<div class="code-block"><div class="code-toolbar"><span>shell</span></div><pre tabindex="0"><code class="language-shell">export TAVILY_API_KEY=...
+</code></pre></div>
+<p>We use LiteLLM for max compatibility of LLM API, AND to enable custom API deployment for agentic training. Export your LLM API KEY, say OPENAI_API_KEY, ANTHROPIC_API_KEY... </p>
+<div class="code-block"><div class="code-toolbar"><span>bash</span></div><pre tabindex="0"><code class="language-bash">export OPENAI_API_KEY=...
+</code></pre></div>
+<p>We have made <code>launch/launch/utilities/llm.py</code> compatible to both traditional completion API and OpenAI responses API.
+If your llm provider requires user identity login for API usage or requires some weird settings like Gemini thinking signaturue, go to modify <code>launch/launch/utilities/llm.py</code>.</p>
+<p>Start repo launch process:</p>
+<div class="code-block"><div class="code-toolbar"><span>shell</span></div><pre tabindex="0"><code class="language-shell">launch data/examples/config.json
 # equivalently: python -m launch.run --config-path data/examples/config.json
-```
-
-### Reuse RepoLaunch results for different commits of the same repo
-
-If your dataset to be launched contains multiple commits from the same repo, we suggest you referring to the solution in [Development-agent-memory.md](Development-agent-memory.md#reuse-repolaunch-results-for-different-commits-of-the-same-repo) to launch your dataset instead of using `launch data/examples/config.json` directly.
-
-## Input
-
-For the input data used to set up the environment, we require the following fields:
-
-| Field        | Description                                                                 |
-|--------------|-----------------------------------------------------------------------------|
-| `instance_id`| Unique identifier of the instance                                           |
-| `repo`       | Full name of the repository like {user_name}/{project_name}                                                |
-| `base_commit`| Commit to check out                                                         |
-| `language`   | Main language of the repo |
-| `created_at` | (Optional) Creation time of the instance, used to support time-aware environment setup, useful in Python |
-| `hints`      | (Optional)  Any hints for setting up the repo you want to give the agent, such as GitHub run checks info |
-
-
-## Run Config
-
-### Step 1 Setup
-RepoLaunch is a two step process, the first step is to setup the repo, installing dependencies, build the repo and find test cases to test the build of the repo. The following configs are required.
-
-| Field              | Type    |  Description                                                                 |
-|--------------------|---------|-----------------------------------------------------------------------------|
-| `print_to_console` | boolean |  Whether to print logs to console                                           |
-| `model_config`     | dict    |  Put all arguments for litellm response completion in this dict {"model": "openai/gpt-5.4", ...}. The "model" field should follow formats in litellm document, usually {provider_name}/{model_name}. Put other arguments for litellm response completion here, such as base_url, temperature, top_p. |
-| `workspace_root`   | string  |  Workspace folder for one run                                      |
-| `dataset`          | string  |  Path to the dataset file                                                    |
-| `instance_id`      | string  |  Specific instance ID to run, null to run all instances in the dataset      |
-| `first_N_repos`    | integer |  Limit processing to first N repos (-1 for all repos)                       |
-| `max_workers`      | integer |  Number of parallel workers for processing. Usually one worker takes 4 CPUs and 16GB RAM, so decide num of workers based on your machine specifications. |
-| `overwrite`        | boolean |  Whether to overwrite existing results (false will skip existing repos)     |
-| `os`               | str     |  Which docker image os architecture to build on. Default to `linux` -- use linux containers on linux machines or wsl. Can also choose: `windows` -- use windows containers on windows host; `android` -- use android containers which are built from linux containers on linux machines or wsl.   |
-| `max_trials`       | integer |   How many rounds of setup-verify loop agent can attempt, default 1   |
-| `max_steps_setup`  | integer |   How many steps agent can attemp to setup the environment, default 20   |
-| `max_steps_verify` | integer |   How many steps agent can attemp to verify the setup, default 20   |
-| `cmd_timeout`      | integer |   Time limit in minute of llm's each shell command, default 30 min. Suggested: 80 for Linux and 120 for Windows.   |
-| `image_prefix`     | string  |   Prefix of the output_image in the format {namespace}/{dockerhub_repo}, defaults to repolaunch/dev |
-
-
-### Step 2 Organize
-RepoLaunch also provides a second optional step to 
-
-1) Organize the commands to rebuild to repo after edits of the source code;
+</code></pre></div>
+<h3 id="reuse-repolaunch-results-for-different-commits-of-the-same-repo">Reuse RepoLaunch results for different commits of the same repo</h3>
+<p>If your dataset to be launched contains multiple commits from the same repo, we suggest you referring to the solution in <a href="https://github.com/microsoft/RepoLaunch/blob/main/docs/Development-agent-memory.md#reuse-repolaunch-results-for-different-commits-of-the-same-repo">Development-agent-memory.md</a> to launch your dataset instead of using <code>launch data/examples/config.json</code> directly.</p>
+<h2 id="input">Input</h2>
+<p>For the input data used to set up the environment, we require the following fields:</p>
+<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>instance_id</code></td>
+<td>Unique identifier of the instance</td>
+</tr>
+<tr>
+<td><code>repo</code></td>
+<td>Full name of the repository like {user_name}/{project_name}</td>
+</tr>
+<tr>
+<td><code>base_commit</code></td>
+<td>Commit to check out</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>Main language of the repo</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td>(Optional) Creation time of the instance, used to support time-aware environment setup, useful in Python</td>
+</tr>
+<tr>
+<td><code>hints</code></td>
+<td>(Optional)  Any hints for setting up the repo you want to give the agent, such as GitHub run checks info</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="run-config">Run Config</h2>
+<h3 id="step-1-setup">Step 1 Setup</h3>
+<p>RepoLaunch is a two step process, the first step is to setup the repo, installing dependencies, build the repo and find test cases to test the build of the repo. The following configs are required.</p>
+<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>print_to_console</code></td>
+<td>boolean</td>
+<td>Whether to print logs to console</td>
+</tr>
+<tr>
+<td><code>model_config</code></td>
+<td>dict</td>
+<td>Put all arguments for litellm response completion in this dict {"model": "openai/gpt-5.4", ...}. The "model" field should follow formats in litellm document, usually {provider_name}/{model_name}. Put other arguments for litellm response completion here, such as base_url, temperature, top_p.</td>
+</tr>
+<tr>
+<td><code>workspace_root</code></td>
+<td>string</td>
+<td>Workspace folder for one run</td>
+</tr>
+<tr>
+<td><code>dataset</code></td>
+<td>string</td>
+<td>Path to the dataset file</td>
+</tr>
+<tr>
+<td><code>instance_id</code></td>
+<td>string</td>
+<td>Specific instance ID to run, null to run all instances in the dataset</td>
+</tr>
+<tr>
+<td><code>first_N_repos</code></td>
+<td>integer</td>
+<td>Limit processing to first N repos (-1 for all repos)</td>
+</tr>
+<tr>
+<td><code>max_workers</code></td>
+<td>integer</td>
+<td>Number of parallel workers for processing. Usually one worker takes 4 CPUs and 16GB RAM, so decide num of workers based on your machine specifications.</td>
+</tr>
+<tr>
+<td><code>overwrite</code></td>
+<td>boolean</td>
+<td>Whether to overwrite existing results (false will skip existing repos)</td>
+</tr>
+<tr>
+<td><code>os</code></td>
+<td>str</td>
+<td>Which docker image os architecture to build on. Default to <code>linux</code> -- use linux containers on linux machines or wsl. Can also choose: <code>windows</code> -- use windows containers on windows host; <code>android</code> -- use android containers which are built from linux containers on linux machines or wsl.</td>
+</tr>
+<tr>
+<td><code>max_trials</code></td>
+<td>integer</td>
+<td>How many rounds of setup-verify loop agent can attempt, default 1</td>
+</tr>
+<tr>
+<td><code>max_steps_setup</code></td>
+<td>integer</td>
+<td>How many steps agent can attemp to setup the environment, default 20</td>
+</tr>
+<tr>
+<td><code>max_steps_verify</code></td>
+<td>integer</td>
+<td>How many steps agent can attemp to verify the setup, default 20</td>
+</tr>
+<tr>
+<td><code>cmd_timeout</code></td>
+<td>integer</td>
+<td>Time limit in minute of llm's each shell command, default 30 min. Suggested: 80 for Linux and 120 for Windows.</td>
+</tr>
+<tr>
+<td><code>image_prefix</code></td>
+<td>string</td>
+<td>Prefix of the output_image in the format {namespace}/{dockerhub_repo}, defaults to repolaunch/dev</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="step-2-organize">Step 2 Organize</h3>
+<p>RepoLaunch also provides a second optional step to </p>
+<p>1) Organize the commands to rebuild to repo after edits of the source code;
 2) Organize the commands to test the repo with verbose testcase-status output, write a python script to parse the output into clean testcase-status mapping in JSON format:
     {
         "testcase1": "pass",
         "testcase2": "fail",
         "testcase3": "skip",
     };
-3) Make best effort to find the command to run a single testcase separately.
-
-The configs required for this step:
-
-
-| Field              | Type    |  Description                                                                 |
-|--------------------|---------|-----------------------------------------------------------------------------|
-| `mode`             | dict     |   default to `{"setup": true, "organize": false}`, set to `{"setup": true, "organize": true}` to do the two steps together, or set to `{"setup": false, "organize": true}` to do the second step separately AFTER the first step is DONE. By default the `testone` step in the organize stage to get the command to specify each single test to run is enabled; specify `"mode": {"setup": true, "organize": true, "get_pertest_cmd": false}` to disable this step in the organize stage.  |
-| `max_steps_organize` | integer |   how many steps agent can attemp to organize the commands, default 20   |
-
-
-## Output
-
-The per-instance output will be saved in `{workspace_root}/playground/{instance_id}/result.json`.
-
-LLM API logs (input/output/token_count/cost) will be saved in `{workspace_root}/playground/{instance_id}/llm/`
-
-### Step 1 Setup
-
-| Field            | Description                                                                                      |
-|------------------|--------------------------------------------------------------------------------------------------|
-| `instance_id`    | Unique identifier of the instance                                   |
-| `docker_image_layers` | {"base_image": ..., "setup_layer": list[commands]}, can convert to Dockerfile |
-| `docker_image`   | Commited Image                                                      |
-| `setup_commands` | Records of shell commands used to set up the environment            |
-| `test_commands`  | Records of shell commands used to run the tests with verbose output |
-| `duration`       | Time taken to run the process (in minutes)                          |
-| `cost`           | Accumulative LM API token count & cost of the setup stage           |
-| `completed`      | Boolean indicating whether the execution completed successfully     |
-| `exception`      | Error message or `null` if no exception occurred                    |
-
-Summary would be saved to `{workspace_root}/setup.jsonl`
-
-### Step 2 Organize
-
-The `setup_commands` and `test_commands` of the first step would be noisy, with useless error commands and exploration commands. This is why we design the second step. The second step output would add these fields:
-
-| Field            | Description                                                                                      |
-|------------------|--------------------------------------------------------------------------------------------------|
-| `docker_image_layers` | {"base_image": ..., "setup_layer": list[commands], "organize_layer":  list[commands]}, can convert to Dockerfile |
-| `organize_duration`   | Time taken to run the process (in minutes)                    |
-| `cost`                | Accumulative LM API token count & cost of the setup stage and the organize stage, respectively |
-| `organize_completed`  | Boolean indicating whether the organization attempt completed successfully   |
-| `rebuild_commands`    | Minimal commands to rebuild the repo instance                 |
-| `test_commands`       | Clean test commands                                           |
-| `parse`               | python script to parse the test output intp testcase-status mapping    |
-| `test_status`         | Parsed testcase-status mapping in JSON                        |
-| `pertest_command`     | Command to specify a testcase to run, might do not exists     |
-
-
-Summary would be saved to `{workspace_root}/organize.jsonl`
+3) Make best effort to find the command to run a single testcase separately.</p>
+<p>The configs required for this step:</p>
+<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mode</code></td>
+<td>dict</td>
+<td>default to <code>{"setup": true, "organize": false}</code>, set to <code>{"setup": true, "organize": true}</code> to do the two steps together, or set to <code>{"setup": false, "organize": true}</code> to do the second step separately AFTER the first step is DONE. By default the <code>testone</code> step in the organize stage to get the command to specify each single test to run is enabled; specify <code>"mode": {"setup": true, "organize": true, "get_pertest_cmd": false}</code> to disable this step in the organize stage.</td>
+</tr>
+<tr>
+<td><code>max_steps_organize</code></td>
+<td>integer</td>
+<td>how many steps agent can attemp to organize the commands, default 20</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="output">Output</h2>
+<p>The per-instance output will be saved in <code>{workspace_root}/playground/{instance_id}/result.json</code>.</p>
+<p>LLM API logs (input/output/token_count/cost) will be saved in <code>{workspace_root}/playground/{instance_id}/llm/</code></p>
+<h3 id="step-1-setup_1">Step 1 Setup</h3>
+<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>instance_id</code></td>
+<td>Unique identifier of the instance</td>
+</tr>
+<tr>
+<td><code>docker_image_layers</code></td>
+<td>{"base_image": ..., "setup_layer": list[commands]}, can convert to Dockerfile</td>
+</tr>
+<tr>
+<td><code>docker_image</code></td>
+<td>Commited Image</td>
+</tr>
+<tr>
+<td><code>setup_commands</code></td>
+<td>Records of shell commands used to set up the environment</td>
+</tr>
+<tr>
+<td><code>test_commands</code></td>
+<td>Records of shell commands used to run the tests with verbose output</td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td>Time taken to run the process (in minutes)</td>
+</tr>
+<tr>
+<td><code>cost</code></td>
+<td>Accumulative LM API token count &amp; cost of the setup stage</td>
+</tr>
+<tr>
+<td><code>completed</code></td>
+<td>Boolean indicating whether the execution completed successfully</td>
+</tr>
+<tr>
+<td><code>exception</code></td>
+<td>Error message or <code>null</code> if no exception occurred</td>
+</tr>
+</tbody>
+</table></div>
+<p>Summary would be saved to <code>{workspace_root}/setup.jsonl</code></p>
+<h3 id="step-2-organize_1">Step 2 Organize</h3>
+<p>The <code>setup_commands</code> and <code>test_commands</code> of the first step would be noisy, with useless error commands and exploration commands. This is why we design the second step. The second step output would add these fields:</p>
+<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker_image_layers</code></td>
+<td>{"base_image": ..., "setup_layer": list[commands], "organize_layer":  list[commands]}, can convert to Dockerfile</td>
+</tr>
+<tr>
+<td><code>organize_duration</code></td>
+<td>Time taken to run the process (in minutes)</td>
+</tr>
+<tr>
+<td><code>cost</code></td>
+<td>Accumulative LM API token count &amp; cost of the setup stage and the organize stage, respectively</td>
+</tr>
+<tr>
+<td><code>organize_completed</code></td>
+<td>Boolean indicating whether the organization attempt completed successfully</td>
+</tr>
+<tr>
+<td><code>rebuild_commands</code></td>
+<td>Minimal commands to rebuild the repo instance</td>
+</tr>
+<tr>
+<td><code>test_commands</code></td>
+<td>Clean test commands</td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>python script to parse the test output intp testcase-status mapping</td>
+</tr>
+<tr>
+<td><code>test_status</code></td>
+<td>Parsed testcase-status mapping in JSON</td>
+</tr>
+<tr>
+<td><code>pertest_command</code></td>
+<td>Command to specify a testcase to run, might do not exists</td>
+</tr>
+</tbody>
+</table></div>
+<p>Summary would be saved to <code>{workspace_root}/organize.jsonl</code></p>
+      </article>
+      <nav class="page-navigation" aria-label="Previous and next pages"><a href="../../pages/installation/windows.html"><small>Previous</small>← Windows Container Setup</a><a href="../../pages/run/api.html"><small>Next</small>→ Useful public APIs</a></nav>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <h2 class="footer-heading">Relevant Links</h2>
+        <div class="footer-links">
+          <div><a href="https://swe-bench-live.github.io/">SWE-bench-Live Webpage ↗</a><a href="https://github.com/microsoft/SWE-bench-Live">SWE-bench-Live GitHub ↗</a></div>
+          <div><a href="https://huggingface.co/collections/SWE-bench-Live/swe-bench-live">SWE-bench-Live Huggingface ↗</a><a href="https://huggingface.co/collections/SWE-bench-Live/cross-platform-bench">Cross-platform Bench Huggingface ↗</a></div>
+        </div>
+        <div class="footer-bottom">RepoLaunch Agent · Open source tools for reproducible Software Engineering research.</div>
+      </div>
+    </footer>
+  </div>
+  <span class="sr-only" role="status" id="copy-status" aria-live="polite"></span>
+</body>
+</html>
