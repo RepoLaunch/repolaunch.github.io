@@ -14,12 +14,12 @@ Always show at laptop mode (width>length)
 Hide to left with a button to click to pop up at phone mode (length>width)
 ```
 |_Introduction -- index.html
-|_Installation -- installation.html
-  |_Windows Container Setup -- windows.html
-|_Run RepoLaunch -- run.html
-  |_Useful public APIs --api.html
-|_Citations & History --citations.html
-|_Contact Us --contact.html
+|_Installation -- pages/installation/installation.html
+    |_Windows Container Setup -- pages/installation/windows.html
+|_Run RepoLaunch -- pages/run/run.html
+    |_Useful public APIs -- pages/run/api.html
+|_Citations & History -- pages/citations.html
+|_Contact Us -- pages/contact.html
 ```
 
 ### bottom bar

@@ -1,0 +1,87 @@
+
+## Helper scripts
+
+### To use launch result
+
+```python
+from launch.api import LaunchedInstance
+import json
+from typing import Literal
+
+# load an instance from organize.jsonl
+with open("..../organize.jsonl") as f:
+    instance_list = [json.loads(i) for i in f]
+instance_dict = instance_list[0]
+
+# Object Oriented API
+instance: LaunchedInstance = LaunchedInstance(instance_dict, "linux") # or "windows" for windows image
+
+###### To use the testlog parser to get current test statuses ######
+success, build_log = instance.build(verbose = False)
+log: str = instance.test()
+status: dict[str, Literal['pass', 'fail', 'skip']] = instance.parse_test_log(log)
+
+# Equivalently:
+status: dict[str, Literal['pass', 'fail', 'skip']] = instance.build_test_parse(verbose = True)
+
+print(status)
+# {"testcase1": "pass", "testcase2": "fail", "testcase3": "skip"}
+
+del instance # to release docker container
+
+###### To evaluate the effect of a new diff patch ######
+
+instance: LaunchedInstance = LaunchedInstance(instance_dict, "linux")
+
+# load your diff_patch
+# for example, for swe bench format instance:
+diff_patch = instance_dict["test_patch"]
+
+instance.apply_patch(diff_patch, verbose=True)
+after_patch_status: dict[str, Literal['pass', 'fail', 'skip']] = instance.build_test_parse(verbose = True)
+
+###### Other Utilities ######
+
+# if you need to save the changes
+success, log = instance.git_commit(your_message)
+instance.commit_to_image(image_name="experiment", tag="1")
+
+# for custom bash command into the docker container:
+res = instance.container.send_command(your_command)
+print(res.metadata.exit_code, res.output, sep = "\n")
+
+del instance # to release docker container
+```
+
+### If launch was interrupted, you can collect summary manually
+
+```bash
+python -m launch.scripts.collect\
+    --workspace  data/test1  --step setup  # or organize
+```
+
+### To upload the result to dockerhub
+
+```bash
+docker login
+
+python -m launch.scripts.upload_docker\
+    --dataset  data/test1/organize.jsonl\
+    --clear_after_push 0 # 0 for false and 1 for true
+```
+
+### Re-assemble Dockerfile
+
+Reconstruct Dockerfile of a commited image from instance["docker_image_layers"].
+
+The Dockerfile behavior strictly aligns with that of RepoLaunch-created images. It produces two layers (the setup layer and the organize layer) with error commands silenty bypassed instead of interuptting the build.
+
+```bash
+python -m launch.scripts.gen_dockerfile  \
+    --dataset data/..../organize.jsonl  \
+    --platform linux \
+    # or windows 
+    --output_dir data/dockerfiles
+```
+
+Android images are also linux-arch, so use --platform=linux
