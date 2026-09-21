@@ -44,7 +44,7 @@ contains a `data-shared` placeholder for each component. The script resolves
 local links and images relative to its own location and marks the current page
 in the sidebar automatically.
 
-The script URL includes `?v=shared-layout-4` so browsers do not reuse the older
+The script URL includes `?v=shared-layout-5` so browsers do not reuse the older
 script from before the shared layout was introduced. When deploying future
 JavaScript changes, update this version in all eight HTML files to refresh
 cached copies.

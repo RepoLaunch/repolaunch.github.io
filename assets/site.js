@@ -44,11 +44,12 @@ document.querySelectorAll('[data-site-href], [data-site-src]').forEach(element =
   }
 });
 
-// Apply the same link behavior to page content and the shared bars.
+// Keep site navigation in this tab; open external websites in a new tab.
 document.querySelectorAll('a[href]').forEach(link => {
-  if (link.matches('.topbar .brand')) return;
-  link.setAttribute('target', '_blank');
-  link.relList.add('noopener', 'noreferrer');
+  const url = new URL(link.href);
+  const isExternalWebsite = ['http:', 'https:'].includes(url.protocol) && url.origin !== siteRoot.origin;
+  link.setAttribute('target', isExternalWebsite ? '_blank' : '_self');
+  if (isExternalWebsite) link.relList.add('noopener', 'noreferrer');
 });
 
 const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
