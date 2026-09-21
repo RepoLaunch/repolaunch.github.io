@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Launch a repository, configure your workflow, and work with the results.">
+  <meta name="description" content="Explore the architecture and launch your first repository.">
   <meta name="theme-color" content="#fbfaf6">
   <title>Run RepoLaunch · RepoLaunch Agent</title>
   <link rel="icon" type="image/png" href="../../assets/repolaunch_logo.png">
   <link rel="stylesheet" href="../../assets/site.css?v=mobile-header-1">
-  <script src="../../assets/site.js?v=shared-layout-2" defer></script>
+  <script src="../../assets/site.js?v=shared-layout-3" defer></script>
   <noscript><style>.topbar, .sidebar, .site-footer { display: none; } .site-body { margin-left: 0; padding-top: 0; }</style></noscript>
 </head>
 <body>
@@ -19,14 +19,11 @@
   <div class="site-body">
     <main class="content" id="main-content" tabindex="-1">
       <div class="breadcrumb"><a href="../../index.html">Docs</a><span aria-hidden="true">/</span><span>Run RepoLaunch</span></div>
-      <header class="page-header"><p class="eyebrow">Guides</p><h1>Run RepoLaunch: A Quick Start</h1><p class="subtitle">Launch a repository, configure your workflow, and work with the results.</p></header>
+      <header class="page-header"><p class="eyebrow">Guides</p><h1>Run RepoLaunch: A Quick Start</h1><p class="subtitle">Explore the architecture and launch your first repository.</p></header>
       <details class="toc"><summary>On this page</summary><div>
 <ul>
 <li><a href="#launch-your-repository">Architecture Overview</a></li>
 <li><a href="#run-repolaunch">Run RepoLaunch: A Quick Start</a></li>
-<li><a href="#input">Input</a></li>
-<li><a href="#run-config">Run Config</a></li>
-<li><a href="#output">Output</a></li>
 </ul>
 </div>
 </details>
@@ -51,260 +48,8 @@ If your llm provider requires user identity login for API usage or requires some
 </code></pre></div>
 <h3 id="reuse-repolaunch-results-for-different-commits-of-the-same-repo">Reuse RepoLaunch results for different commits of the same repo</h3>
 <p>If your dataset to be launched contains multiple commits from the same repo, we suggest you referring to the solution in <a href="https://github.com/microsoft/RepoLaunch/blob/main/docs/Development-agent-memory.md#reuse-repolaunch-results-for-different-commits-of-the-same-repo">Development-agent-memory.md</a> to launch your dataset instead of using <code>launch data/examples/config.json</code> directly.</p>
-<h2 id="input">Input</h2>
-<p>For the input data used to set up the environment, we require the following fields:</p>
-<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>instance_id</code></td>
-<td>Unique identifier of the instance</td>
-</tr>
-<tr>
-<td><code>repo</code></td>
-<td>Full name of the repository like {user_name}/{project_name}</td>
-</tr>
-<tr>
-<td><code>base_commit</code></td>
-<td>Commit to check out</td>
-</tr>
-<tr>
-<td><code>language</code></td>
-<td>Main language of the repo</td>
-</tr>
-<tr>
-<td><code>created_at</code></td>
-<td>(Optional) Creation time of the instance, used to support time-aware environment setup, useful in Python</td>
-</tr>
-<tr>
-<td><code>hints</code></td>
-<td>(Optional)  Any hints for setting up the repo you want to give the agent, such as GitHub run checks info</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="run-config">Run Config</h2>
-<h3 id="step-1-setup">Step 1 Setup</h3>
-<p>RepoLaunch is a two step process, the first step is to setup the repo, installing dependencies, build the repo and find test cases to test the build of the repo. The following configs are required.</p>
-<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>print_to_console</code></td>
-<td>boolean</td>
-<td>Whether to print logs to console</td>
-</tr>
-<tr>
-<td><code>model_config</code></td>
-<td>dict</td>
-<td>Put all arguments for litellm response completion in this dict {"model": "openai/gpt-5.4", ...}. The "model" field should follow formats in litellm document, usually {provider_name}/{model_name}. Put other arguments for litellm response completion here, such as base_url, temperature, top_p.</td>
-</tr>
-<tr>
-<td><code>workspace_root</code></td>
-<td>string</td>
-<td>Workspace folder for one run</td>
-</tr>
-<tr>
-<td><code>dataset</code></td>
-<td>string</td>
-<td>Path to the dataset file</td>
-</tr>
-<tr>
-<td><code>instance_id</code></td>
-<td>string</td>
-<td>Specific instance ID to run, null to run all instances in the dataset</td>
-</tr>
-<tr>
-<td><code>first_N_repos</code></td>
-<td>integer</td>
-<td>Limit processing to first N repos (-1 for all repos)</td>
-</tr>
-<tr>
-<td><code>max_workers</code></td>
-<td>integer</td>
-<td>Number of parallel workers for processing. Usually one worker takes 4 CPUs and 16GB RAM, so decide num of workers based on your machine specifications.</td>
-</tr>
-<tr>
-<td><code>overwrite</code></td>
-<td>boolean</td>
-<td>Whether to overwrite existing results (false will skip existing repos)</td>
-</tr>
-<tr>
-<td><code>os</code></td>
-<td>str</td>
-<td>Which docker image os architecture to build on. Default to <code>linux</code> -- use linux containers on linux machines or wsl. Can also choose: <code>windows</code> -- use windows containers on windows host; <code>android</code> -- use android containers which are built from linux containers on linux machines or wsl.</td>
-</tr>
-<tr>
-<td><code>max_trials</code></td>
-<td>integer</td>
-<td>How many rounds of setup-verify loop agent can attempt, default 1</td>
-</tr>
-<tr>
-<td><code>max_steps_setup</code></td>
-<td>integer</td>
-<td>How many steps agent can attemp to setup the environment, default 20</td>
-</tr>
-<tr>
-<td><code>max_steps_verify</code></td>
-<td>integer</td>
-<td>How many steps agent can attemp to verify the setup, default 20</td>
-</tr>
-<tr>
-<td><code>cmd_timeout</code></td>
-<td>integer</td>
-<td>Time limit in minute of llm's each shell command, default 30 min. Suggested: 80 for Linux and 120 for Windows.</td>
-</tr>
-<tr>
-<td><code>image_prefix</code></td>
-<td>string</td>
-<td>Prefix of the output_image in the format {namespace}/{dockerhub_repo}, defaults to repolaunch/dev</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="step-2-organize">Step 2 Organize</h3>
-<p>RepoLaunch also provides a second optional step to </p>
-<p>1) Organize the commands to rebuild to repo after edits of the source code;
-2) Organize the commands to test the repo with verbose testcase-status output, write a python script to parse the output into clean testcase-status mapping in JSON format:
-    {
-        "testcase1": "pass",
-        "testcase2": "fail",
-        "testcase3": "skip",
-    };
-3) Make best effort to find the command to run a single testcase separately.</p>
-<p>The configs required for this step:</p>
-<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mode</code></td>
-<td>dict</td>
-<td>default to <code>{"setup": true, "organize": false}</code>, set to <code>{"setup": true, "organize": true}</code> to do the two steps together, or set to <code>{"setup": false, "organize": true}</code> to do the second step separately AFTER the first step is DONE. By default the <code>testone</code> step in the organize stage to get the command to specify each single test to run is enabled; specify <code>"mode": {"setup": true, "organize": true, "get_pertest_cmd": false}</code> to disable this step in the organize stage.</td>
-</tr>
-<tr>
-<td><code>max_steps_organize</code></td>
-<td>integer</td>
-<td>how many steps agent can attemp to organize the commands, default 20</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="output">Output</h2>
-<p>The per-instance output will be saved in <code>{workspace_root}/playground/{instance_id}/result.json</code>.</p>
-<p>LLM API logs (input/output/token_count/cost) will be saved in <code>{workspace_root}/playground/{instance_id}/llm/</code></p>
-<h3 id="step-1-setup_1">Step 1 Setup</h3>
-<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>instance_id</code></td>
-<td>Unique identifier of the instance</td>
-</tr>
-<tr>
-<td><code>docker_image_layers</code></td>
-<td>{"base_image": ..., "setup_layer": list[commands]}, can convert to Dockerfile</td>
-</tr>
-<tr>
-<td><code>docker_image</code></td>
-<td>Commited Image</td>
-</tr>
-<tr>
-<td><code>setup_commands</code></td>
-<td>Records of shell commands used to set up the environment</td>
-</tr>
-<tr>
-<td><code>test_commands</code></td>
-<td>Records of shell commands used to run the tests with verbose output</td>
-</tr>
-<tr>
-<td><code>duration</code></td>
-<td>Time taken to run the process (in minutes)</td>
-</tr>
-<tr>
-<td><code>cost</code></td>
-<td>Accumulative LM API token count &amp; cost of the setup stage</td>
-</tr>
-<tr>
-<td><code>completed</code></td>
-<td>Boolean indicating whether the execution completed successfully</td>
-</tr>
-<tr>
-<td><code>exception</code></td>
-<td>Error message or <code>null</code> if no exception occurred</td>
-</tr>
-</tbody>
-</table></div>
-<p>Summary would be saved to <code>{workspace_root}/setup.jsonl</code></p>
-<h3 id="step-2-organize_1">Step 2 Organize</h3>
-<p>The <code>setup_commands</code> and <code>test_commands</code> of the first step would be noisy, with useless error commands and exploration commands. This is why we design the second step. The second step output would add these fields:</p>
-<div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>docker_image_layers</code></td>
-<td>{"base_image": ..., "setup_layer": list[commands], "organize_layer":  list[commands]}, can convert to Dockerfile</td>
-</tr>
-<tr>
-<td><code>organize_duration</code></td>
-<td>Time taken to run the process (in minutes)</td>
-</tr>
-<tr>
-<td><code>cost</code></td>
-<td>Accumulative LM API token count &amp; cost of the setup stage and the organize stage, respectively</td>
-</tr>
-<tr>
-<td><code>organize_completed</code></td>
-<td>Boolean indicating whether the organization attempt completed successfully</td>
-</tr>
-<tr>
-<td><code>rebuild_commands</code></td>
-<td>Minimal commands to rebuild the repo instance</td>
-</tr>
-<tr>
-<td><code>test_commands</code></td>
-<td>Clean test commands</td>
-</tr>
-<tr>
-<td><code>parse</code></td>
-<td>python script to parse the test output intp testcase-status mapping</td>
-</tr>
-<tr>
-<td><code>test_status</code></td>
-<td>Parsed testcase-status mapping in JSON</td>
-</tr>
-<tr>
-<td><code>pertest_command</code></td>
-<td>Command to specify a testcase to run, might do not exists</td>
-</tr>
-</tbody>
-</table></div>
-<p>Summary would be saved to <code>{workspace_root}/organize.jsonl</code></p>
       </article>
-      <nav class="page-navigation" aria-label="Previous and next pages"><a href="../../pages/installation/windows.html"><small>Previous</small>← Windows Container Setup</a><a href="../../pages/run/api.html"><small>Next</small>→ Useful public APIs</a></nav>
+      <nav class="page-navigation" aria-label="Previous and next pages"><a href="../../pages/installation/windows.html"><small>Previous</small>← Windows Container Setup</a><a href="customize.html"><small>Next</small>→ Customize Input &amp; Config</a></nav>
     </main>
     <footer class="site-footer" data-shared="footer"></footer>
   </div>

@@ -17,6 +17,7 @@ Hide to left with a button to click to pop up at phone mode (length>width)
 |_Installation -- pages/installation/installation.html
     |_Windows Container Setup -- pages/installation/windows.html
 |_Run RepoLaunch -- pages/run/run.html
+    |_Customize Input & Config -- pages/run/customize.html
     |_Useful public APIs -- pages/run/api.html
 |_Citations & History -- pages/citations.html
 |_Contact Us -- pages/contact.html
@@ -38,14 +39,14 @@ Relevant Links:
 ## Shared layout and deployment
 
 The header, sidebar, and footer are defined once in `sharedLayout` at the top of
-`assets/site.js`. Edit those templates to update all seven pages. Each HTML page
+`assets/site.js`. Edit those templates to update all eight pages. Each HTML page
 contains a `data-shared` placeholder for each component. The script resolves
 local links and images relative to its own location and marks the current page
 in the sidebar automatically.
 
-The script URL includes `?v=shared-layout-1` so browsers do not reuse the older
+The script URL includes `?v=shared-layout-3` so browsers do not reuse the older
 script from before the shared layout was introduced. When deploying future
-JavaScript changes, update this version in all seven HTML files to refresh
+JavaScript changes, update this version in all eight HTML files to refresh
 cached copies.
 
 Page content remains directly editable in `index.html` and `pages/`. Publish

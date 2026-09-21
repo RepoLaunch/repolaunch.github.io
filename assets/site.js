@@ -13,7 +13,7 @@ const sharedLayout = {
       <ul class="nav-list">
         <li><a data-site-href="index.html"><span class="nav-icon" aria-hidden="true">◎</span>Introduction</a></li>
         <li><a data-site-href="pages/installation/installation.html"><span class="nav-icon" aria-hidden="true">↓</span>Installation</a><ul><li><a data-site-href="pages/installation/windows.html">Windows Container Setup</a></li></ul></li>
-        <li><a data-site-href="pages/run/run.html"><span class="nav-icon" aria-hidden="true">▷</span>Run RepoLaunch</a><ul><li><a data-site-href="pages/run/api.html">Useful public APIs</a></li></ul></li>
+        <li><a data-site-href="pages/run/run.html"><span class="nav-icon" aria-hidden="true">▷</span>Run RepoLaunch</a><ul><li><a data-site-href="pages/run/customize.html">Customize Input &amp; Config</a></li><li><a data-site-href="pages/run/api.html">Useful public APIs</a></li></ul></li>
         <li><a data-site-href="pages/citations.html"><span class="nav-icon" aria-hidden="true">◷</span>Citations &amp; History</a></li>
         <li><a data-site-href="pages/contact.html"><span class="nav-icon" aria-hidden="true">✉</span>Contact Us</a></li>
       </ul>
