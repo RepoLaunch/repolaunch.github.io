@@ -22,15 +22,15 @@
       <header class="page-header"><p class="eyebrow">Guides</p><h1>Customize Input &amp; Config</h1><p class="subtitle">Customize input data and run configuration, and understand the output.</p></header>
       <details class="toc"><summary>On this page</summary><div>
 <ul>
-<li><a href="#input">Input</a></li>
+<li><a href="#input">Input Dataset File</a></li>
 <li><a href="#run-config">Run Config</a></li>
-<li><a href="#output">Output</a></li>
+<li><a href="#output">Output: RepoLaunch Results</a></li>
 </ul>
 </div>
 </details>
       <article class="article" aria-label="Customize Input &amp; Config">
-        <h2 id="input">Input</h2>
-<p>For the input data used to set up the environment, we require the following fields:</p>
+        <h2 id="input">Input Dataset File</h2>
+<p>Like the example input file <a href="https://github.com/microsoft/RepoLaunch/blob/main/data/examples/dataset.jsonl"><code>data/examples/dataset.jsonl</code></a> we provided, the input dataset file used to set up the environments should be a <code>.jsonl</code> file, with each row a repo--base_commit pair. Each row of the file should have following fields:</p>
 <div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
 <thead>
 <tr>
@@ -66,6 +66,7 @@
 </tbody>
 </table></div>
 <h2 id="run-config">Run Config</h2>
+<p>All the configs user need to specify should be put in a <code>config.json</code> file, like the example config file <a href="https://github.com/microsoft/RepoLaunch/blob/main/data/examples/config.json"><code>data/examples/config.json</code></a> we provided.</p>
 <h3 id="step-1-setup">Step 1 Setup</h3>
 <p>RepoLaunch is a two step process, the first step is to setup the repo, installing dependencies, build the repo and find test cases to test the build of the repo. The following configs are required.</p>
 <div class="table-scroll" role="region" aria-label="Reference table" tabindex="0"><table>
@@ -181,7 +182,7 @@
 </tr>
 </tbody>
 </table></div>
-<h2 id="output">Output</h2>
+<h2 id="output">Output: RepoLaunch Results</h2>
 <p>The per-instance output will be saved in <code>{workspace_root}/playground/{instance_id}/result.json</code>.</p>
 <p>LLM API logs (input/output/token_count/cost) will be saved in <code>{workspace_root}/playground/{instance_id}/llm/</code></p>
 <h3 id="step-1-setup_1">Step 1 Setup</h3>
