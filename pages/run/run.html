@@ -8,7 +8,7 @@
   <title>Run RepoLaunch · RepoLaunch Agent</title>
   <link rel="icon" type="image/png" href="../../assets/repolaunch_logo.png">
   <link rel="stylesheet" href="../../assets/site.css?v=mobile-header-1">
-  <script src="../../assets/site.js?v=shared-layout-3" defer></script>
+  <script src="../../assets/site.js?v=shared-layout-4" defer></script>
   <noscript><style>.topbar, .sidebar, .site-footer { display: none; } .site-body { margin-left: 0; padding-top: 0; }</style></noscript>
 </head>
 <body>
@@ -33,21 +33,22 @@
 <p><img alt="RepoLaunch Workflow" src="../../assets/workflow.png" /></p>
 <p>Trajectory &amp; result demos of RepoLaunch agent: <a href="https://github.com/SWE-bench-Live/RepoLaunch-trajectory-archive">RepoLaunch-Trajectory-Archive</a>.</p>
 <h2 id="run-repolaunch">Run RepoLaunch: A Quick Start</h2>
-<p>We provide an example input file <code>data/examples/dataset.jsonl</code> and a run config <code>data/examples/config.json</code> in <a href="https://github.com/microsoft/RepoLaunch/tree/main/data/examples">examples</a> to help you quickly go through the launch process. Expected output files are <code>data/examples/result.jsonl</code> and <code>data/examples/playground/</code>.</p>
+<p>We provide an example input file <a href="https://github.com/microsoft/RepoLaunch/blob/main/data/examples/dataset.jsonl"><code>data/examples/dataset.jsonl</code></a> and a run config <a href="https://github.com/microsoft/RepoLaunch/blob/main/data/examples/config.json"><code>data/examples/config.json</code></a> in <a href="https://github.com/microsoft/RepoLaunch/tree/main/data/examples">examples</a> to help you quickly go through the launch process. Expected output files are <a href="https://github.com/microsoft/RepoLaunch/blob/main/data/examples/result.jsonl"><code>data/examples/result.jsonl</code></a> and <a href="https://github.com/microsoft/RepoLaunch/tree/main/data/examples/playground"><code>data/examples/playground/</code></a>.</p>
 <p>Before getting started, please set your <code>TAVILY_API_KEY</code> environment variable. We use <a href="https://www.tavily.com/">tavily</a> for LLM search engine support.</p>
 <div class="code-block"><div class="code-toolbar"><span>shell</span></div><pre tabindex="0"><code class="language-shell">export TAVILY_API_KEY=...
 </code></pre></div>
 <p>We use LiteLLM for max compatibility of LLM API, AND to enable custom API deployment for agentic training. Export your LLM API KEY, say OPENAI_API_KEY, ANTHROPIC_API_KEY... </p>
 <div class="code-block"><div class="code-toolbar"><span>bash</span></div><pre tabindex="0"><code class="language-bash">export OPENAI_API_KEY=...
 </code></pre></div>
-<p>We have made <code>launch/launch/utilities/llm.py</code> compatible to both traditional completion API and OpenAI responses API.
-If your llm provider requires user identity login for API usage or requires some weird settings like Gemini thinking signaturue, go to modify <code>launch/launch/utilities/llm.py</code>.</p>
+<p>We have made <a href="https://github.com/microsoft/RepoLaunch/blob/main/launch/utilities/llm.py"><code>launch/utilities/llm.py</code></a> compatible to both traditional completion API and OpenAI responses API.
+If your llm provider requires user identity login for API usage or requires some weird settings like Gemini thinking signaturue, go to modify <a href="https://github.com/microsoft/RepoLaunch/blob/main/launch/utilities/llm.py"><code>launch/utilities/llm.py</code></a>.</p>
 <p>Start repo launch process:</p>
-<div class="code-block"><div class="code-toolbar"><span>shell</span></div><pre tabindex="0"><code class="language-shell">launch data/examples/config.json
-# equivalently: python -m launch.run --config-path data/examples/config.json
+<div class="code-block"><div class="code-toolbar"><span>shell</span></div><pre tabindex="0"><code class="language-shell">launch <a href="https://github.com/microsoft/RepoLaunch/blob/main/data/examples/config.json">data/examples/config.json</a>
+# equivalently: python -m launch.run --config-path <a href="https://github.com/microsoft/RepoLaunch/blob/main/data/examples/config.json">data/examples/config.json</a>
 </code></pre></div>
 <h3 id="reuse-repolaunch-results-for-different-commits-of-the-same-repo">Reuse RepoLaunch results for different commits of the same repo</h3>
-<p>If your dataset to be launched contains multiple commits from the same repo, we suggest you referring to the solution in <a href="https://github.com/microsoft/RepoLaunch/blob/main/docs/Development-agent-memory.md#reuse-repolaunch-results-for-different-commits-of-the-same-repo">Development-agent-memory.md</a> to launch your dataset instead of using <code>launch data/examples/config.json</code> directly.</p>
+<p>If your dataset to be launched contains multiple commits from the same repo, we suggest you referring to the solution in <a href="https://github.com/microsoft/RepoLaunch/blob/main/docs/Development-agent-memory.md#reuse-repolaunch-results-for-different-commits-of-the-same-repo">Development-agent-memory.md</a> to launch your dataset instead of using <code>launch <a href="https://github.com/microsoft/RepoLaunch/blob/main/data/examples/config.json">data/examples/config.json</a></code> directly.</p>
+<p>To customize your input dataset and run config, please go to the next page: <a href="customize.html">Customize Input &amp; Config</a>.</p>
       </article>
       <nav class="page-navigation" aria-label="Previous and next pages"><a href="../../pages/installation/windows.html"><small>Previous</small>← Windows Container Setup</a><a href="customize.html"><small>Next</small>→ Customize Input &amp; Config</a></nav>
     </main>

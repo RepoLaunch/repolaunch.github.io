@@ -4,7 +4,7 @@ const siteRoot = new URL('../', document.currentScript.src);
 const sharedLayout = {
   header: `
 <a class="repo-link" href="https://github.com/microsoft/RepoLaunch"><img data-site-src="assets/github_logo.svg" alt="" width="23" height="23">GitHub Repo <span class="external-arrow" aria-hidden="true">↗</span></a>
-    <a class="brand" data-site-href="index.html"><img data-site-src="assets/repolaunch_logo.png" alt="" width="38" height="38">RepoLaunch Agent</a>
+    <a class="brand" data-site-href="index.html" target="_self"><img data-site-src="assets/repolaunch_logo.png" alt="" width="38" height="38">RepoLaunch Agent</a>
     <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="site-navigation" aria-expanded="false">☰</button>
   `,
   sidebar: `
@@ -42,6 +42,13 @@ document.querySelectorAll('[data-site-href], [data-site-src]').forEach(element =
     const path = element.getAttribute(`data-site-${attribute}`);
     if (path !== null) element.setAttribute(attribute, new URL(path, siteRoot).href);
   }
+});
+
+// Apply the same link behavior to page content and the shared bars.
+document.querySelectorAll('a[href]').forEach(link => {
+  if (link.matches('.topbar .brand')) return;
+  link.setAttribute('target', '_blank');
+  link.relList.add('noopener', 'noreferrer');
 });
 
 const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
