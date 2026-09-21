@@ -22,13 +22,15 @@
       <header class="page-header"><p class="eyebrow">Guides</p><h1>Useful public APIs</h1><p class="subtitle">Build, test, apply patches, and manage images with RepoLaunch’s helper APIs.</p></header>
       <details class="toc"><summary>On this page</summary><div>
 <ul>
-<li><a href="#helper-scripts">Helper scripts</a></li>
+<li><a href="#to-use-launch-result">To use launch result</a></li>
+<li><a href="#if-launch-was-interrupted-you-can-collect-summary-manually">If launch was interrupted, you can collect summary manually</a></li>
+<li><a href="#to-upload-the-result-to-dockerhub">To upload the result to dockerhub</a></li>
+<li><a href="#re-assemble-dockerfile">Re-assemble Dockerfile</a></li>
 </ul>
 </div>
 </details>
       <article class="article" aria-label="Useful public APIs">
-        <h2 id="helper-scripts">Helper scripts</h2>
-<h3 id="to-use-launch-result">To use launch result</h3>
+        <h2 id="to-use-launch-result">To use launch result</h2>
 <div class="code-block"><div class="code-toolbar"><span>python</span></div><pre tabindex="0"><code class="language-python">from launch.api import LaunchedInstance
 import json
 from typing import Literal
@@ -77,18 +79,18 @@ print(res.metadata.exit_code, res.output, sep = &quot;\n&quot;)
 
 del instance # to release docker container
 </code></pre></div>
-<h3 id="if-launch-was-interrupted-you-can-collect-summary-manually">If launch was interrupted, you can collect summary manually</h3>
+<h2 id="if-launch-was-interrupted-you-can-collect-summary-manually">If launch was interrupted, you can collect summary manually</h2>
 <div class="code-block"><div class="code-toolbar"><span>bash</span></div><pre tabindex="0"><code class="language-bash">python -m launch.scripts.collect\
     --workspace  data/test1  --step setup  # or organize
 </code></pre></div>
-<h3 id="to-upload-the-result-to-dockerhub">To upload the result to dockerhub</h3>
+<h2 id="to-upload-the-result-to-dockerhub">To upload the result to dockerhub</h2>
 <div class="code-block"><div class="code-toolbar"><span>bash</span></div><pre tabindex="0"><code class="language-bash">docker login
 
 python -m launch.scripts.upload_docker\
     --dataset  data/test1/organize.jsonl\
     --clear_after_push 0 # 0 for false and 1 for true
 </code></pre></div>
-<h3 id="re-assemble-dockerfile">Re-assemble Dockerfile</h3>
+<h2 id="re-assemble-dockerfile">Re-assemble Dockerfile</h2>
 <p>Reconstruct Dockerfile of a commited image from instance["docker_image_layers"].</p>
 <p>The Dockerfile behavior strictly aligns with that of RepoLaunch-created images. It produces two layers (the setup layer and the organize layer) with error commands silenty bypassed instead of interuptting the build.</p>
 <div class="code-block"><div class="code-toolbar"><span>bash</span></div><pre tabindex="0"><code class="language-bash">python -m launch.scripts.gen_dockerfile  \

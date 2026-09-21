@@ -29,7 +29,6 @@
 </div>
 </details>
       <article class="article" aria-label="Installation">
-        <h2 id="repolaunch-agent-tutorial">RepoLaunch Agent Tutorial</h2>
 <h2 id="dependencies-and-machine-configuration">Dependencies and Machine Configuration</h2>
 <p>Pre-install: Git, Python&gt;=3.12, Docker</p>
 <p>The docker dependency means running on containerized cluster pods is <strong>NOT</strong> feasible. Usually running one instances takes 4 GPUs with 16GB RAM, and the large repos like ClickHouse takes even 10 CPUs and 64GB RAM... The disk I/O rate is also critical for docker commit operations, so SSD (&gt;= 1TB) disk is always preferred. In a word, <strong>the performance of your machine directly determines the success rate</strong>.</p>

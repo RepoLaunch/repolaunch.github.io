@@ -22,8 +22,8 @@
       <header class="page-header"><p class="eyebrow">Guides</p><h1>Run RepoLaunch</h1><p class="subtitle">Launch a repository, configure your workflow, and work with the results.</p></header>
       <details class="toc"><summary>On this page</summary><div>
 <ul>
-<li><a href="#launch-your-repository">Launch your Repository</a></li>
-<li><a href="#run-repolaunch">Run RepoLaunch</a></li>
+<li><a href="#launch-your-repository">Architecture Overview</a></li>
+<li><a href="#run-repolaunch">Run RepoLaunch: A Quick Start</a></li>
 <li><a href="#input">Input</a></li>
 <li><a href="#run-config">Run Config</a></li>
 <li><a href="#output">Output</a></li>
@@ -31,11 +31,11 @@
 </div>
 </details>
       <article class="article" aria-label="Run RepoLaunch">
-        <h2 id="launch-your-repository">Launch your Repository</h2>
+        <h2 id="launch-your-repository">Architecture Overview</h2>
 <p>The basic workflow of RepoLaunch agent is as follows:</p>
 <p><img alt="RepoLaunch Workflow" src="../../assets/workflow.png" /></p>
 <p>Trajectory &amp; result demos of RepoLaunch agent: <a href="https://github.com/SWE-bench-Live/RepoLaunch-trajectory-archive">RepoLaunch-Trajectory-Archive</a>.</p>
-<h2 id="run-repolaunch">Run RepoLaunch</h2>
+<h2 id="run-repolaunch">Run RepoLaunch: A Quick Start</h2>
 <p>We provide an example input file <code>data/examples/dataset.jsonl</code> and a run config <code>data/examples/config.json</code> in <a href="https://github.com/microsoft/RepoLaunch/tree/main/data/examples">examples</a> to help you quickly go through the launch process. Expected output files are <code>data/examples/result.jsonl</code> and <code>data/examples/playground/</code>.</p>
 <p>Before getting started, please set your <code>TAVILY_API_KEY</code> environment variable. We use <a href="https://www.tavily.com/">tavily</a> for LLM search engine support.</p>
 <div class="code-block"><div class="code-toolbar"><span>shell</span></div><pre tabindex="0"><code class="language-shell">export TAVILY_API_KEY=...
