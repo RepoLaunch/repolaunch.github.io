@@ -24,14 +24,20 @@
 <ul>
 <li><a href="#dependencies-and-machine-configuration">Dependencies and Machine Configuration</a></li>
 <li><a href="#install-docker-service">Install Docker Service</a></li>
-<li><a href="#install-repolaunch-from-source-code">Install RepoLaunch from Source Code</a></li>
+<li><a href="#install-repolaunch">Finally, Install RepoLaunch</a></li>
 </ul>
 </div>
 </details>
       <article class="article" aria-label="Installation">
 <h2 id="dependencies-and-machine-configuration">Dependencies and Machine Configuration</h2>
-<p>Pre-install: Git, Python&gt;=3.12, Docker</p>
+<p>Before <code>pip install</code>, you need to pre-install on your machine:</p>
+<ul>
+<li><strong>Git</strong></li>
+<li><strong>Python&gt;=3.12</strong></li>
+<li><strong>Docker</strong></li>
+</ul>
 <p>The docker dependency means running on containerized cluster pods is <strong>NOT</strong> feasible. Usually running one instances takes 4 GPUs with 16GB RAM, and the large repos like ClickHouse takes even 10 CPUs and 64GB RAM... The disk I/O rate is also critical for docker commit operations, so SSD (&gt;= 1TB) disk is always preferred. In a word, <strong>the performance of your machine directly determines the success rate</strong>.</p>
+<p>The next sub-section helps you install and configure <strong>Docker</strong>, the most complicated dependency, on your machine.</p>
 <h2 id="install-docker-service">Install Docker Service</h2>
 <p>Now RepoLaunch supports Linux, Windows and Android build. Android images are built from Linux images, so the settings are the same as Linux. Linux images and Android images can run on linux docker and Docker Desktop (windows/macos). </p>
 <h3 id="linux-install">Linux install</h3>
@@ -80,11 +86,21 @@ docker image ls
 </code></pre></div>
 <h3 id="windows-install">Windows install.</h3>
 <p>Please refer to <a href="windows.html">Windows Container Setup</a></p>
-<h2 id="install-repolaunch-from-source-code">Install RepoLaunch from Source Code</h2>
+<h2 id="install-repolaunch">Finally, Install RepoLaunch</h2>
+<p>Choose one of the installation methods below.</p>
+<h3 id="install-from-source-code">Install from Source Code</h3>
 <div class="code-block"><div class="code-toolbar"><span>shell</span></div><pre tabindex="0"><code class="language-shell">git clone https://github.com/microsoft/RepoLaunch
 cd RepoLaunch
 pip install -e .
 </code></pre></div>
+<h3 id="install-from-pypi">Install from PyPI</h3>
+<div class="code-block"><div class="code-toolbar"><span>shell</span></div><pre tabindex="0"><code class="language-shell">pip install repolaunch
+</code></pre></div>
+<p>Verify the installation:</p>
+<div class="code-block"><div class="code-toolbar"><span>shell</span></div><pre tabindex="0"><code class="language-shell">python -c "from launch import api; print(api.__file__)"
+</code></pre></div>
+<p>The command should print the path to <code>launch/api.py</code>, for example <code>venv_path/lib/python3.12/site-packages/launch/api.py</code>.</p>
+<div class="callout"><p>And now RepoLaunch is ready to run on your machine!</p></div>
       </article>
       <nav class="page-navigation" aria-label="Previous and next pages"><a href="../../index.html"><small>Previous</small>← Introduction</a><a href="../../pages/installation/windows.html"><small>Next</small>→ Windows Container Setup</a></nav>
     </main>
